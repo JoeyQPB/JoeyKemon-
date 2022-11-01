@@ -1,19 +1,64 @@
 // Map Creation
 
 const canvas = document.querySelector("canvas");
+const c = canvas.getContext("2d");
+
 canvas.width = 1024;
 canvas.height = 576;
 
-const c = canvas.getContext("2d");
+// contruindo um loop para pegar sub array do nosso array collision
+// vamos pegar de 70 e 70 -> pq nosso mapa tem 70 BLOCOS DE LARGURA por 40 de altura
+// vamos usar o slice para pegar o sub array
 
-console.log(collisions);
+const collisionsMap = [];
+
+for (let i = 0; i < collisions.length; i += 70) {
+  collisionsMap.push(collisions.slice(i, 70 + i));
+}
+
+// vamos criar obj para nossas fontreiras
+// com o static vc cria variaveis estaticas para serem usadas na classe e fora dela
+
+class Boundary {
+  static width = 44.4;
+  static height = 44.4;
+  constructor({ position, width, height }) {
+    this.position = position;
+    this.width = 44.4;
+    this.height = 44.4;
+  }
+
+  draw() {
+    c.fillStyle = `red`;
+    c.fillRect(this.position.x, this.position.y, this.width, this.height);
+  }
+}
+
+const boundaries = [];
+
+collisionsMap.forEach((row, i) => {
+  row.forEach((symbol, j) => {
+    if (symbol === 2049)
+      boundaries.push(
+        new Boundary({
+          position: {
+            x: j * Boundary.width,
+            y: i * Boundary.height,
+          },
+        })
+      );
+  });
+});
+
+console.log(boundaries);
+
 // para incluir ele aq, nos importamos o arquivo para o nosso index
 // ent quando rodarmos o codigo ele consegue fzr essa referencia
 
 //  levando à criação de um CanvasRenderingContext2D - objeto representando
 //    um contexto de renderização bidimensional.
 
-c.fillStyle = `white`;
+// c.fillStyle = `white`;
 
 // aqui estamos especificando a cor ou o estilo para usar regiões internas.
 // tem q vir antes do retângulo
