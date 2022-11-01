@@ -29,24 +29,32 @@ class Boundary {
   }
 
   draw() {
-    c.fillStyle = `red`;
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    c.fillStyle = "red";
   }
 }
+
+// cont criada para definir a posição do background
+
+const offset = {
+  x: -550,
+  y: -650,
+};
 
 const boundaries = [];
 
 collisionsMap.forEach((row, i) => {
   row.forEach((symbol, j) => {
-    if (symbol === 2049)
+    if (symbol === 2049) {
       boundaries.push(
         new Boundary({
           position: {
-            x: j * Boundary.width,
-            y: i * Boundary.height,
+            x: j * Boundary.width + offset.x,
+            y: i * Boundary.height + offset.y,
           },
         })
       );
+    }
   });
 });
 
@@ -91,8 +99,8 @@ class Sprite {
 
 const background = new Sprite({
   position: {
-    x: -550,
-    y: -650,
+    x: offset.x,
+    y: offset.y,
   },
   image: image,
 });
@@ -194,9 +202,36 @@ const keys = {
 
 // para testar qual tecla foi pressionada criaremos uma variavel de obj
 
+const testBoundary = new Boundary({
+  position: {
+    x: 400,
+    y: 400,
+  },
+});
+
+// com essa constante conseguimos pegar cada img que deve se mover quando pressionamos
+// um tecla, assim dando sensação de movimento para nosso player
+// cada img q se movera sera um el do array, se vamos usar para todos e n queremos um
+// array resultante, usaremos o forEach para passar por cada um deles
+
+const movables = [background, testBoundary];
+
+//##-------------------------------------------------------------------------------##
+
+// essa função determina basicamente tudo oq acontece na tela
+// temos a img de backgroung, as colisoes o player e seu movimentos
+
+boundaries.forEach((boundary) => {
+  boundary.draw();
+});
+
 function animate() {
   window.requestAnimationFrame(animate);
   background.draw();
+  // boundaries.forEach((boundary) => {
+  //   boundary.draw();
+  // });
+  testBoundary.draw();
   c.drawImage(
     playerImage,
     0,
@@ -209,11 +244,26 @@ function animate() {
     playerImage.height
   );
 
-  if (keys.w.pressed && lastKey === `w`) background.position.y += 3;
-  else if (keys.a.pressed && lastKey === `a`) background.position.x += 3;
-  else if (keys.s.pressed && lastKey === `s`) background.position.y -= 3;
-  else if (keys.d.pressed && lastKey === `d`) background.position.x -= 3;
+  if (keys.w.pressed && lastKey === `w`) {
+    movables.forEach((movables) => {
+      movables.position.y += 3;
+    });
+  } else if (keys.a.pressed && lastKey === `a`) {
+    movables.forEach((movables) => {
+      movables.position.x += 3;
+    });
+  } else if (keys.s.pressed && lastKey === `s`) {
+    movables.forEach((movables) => {
+      movables.position.y -= 3;
+    });
+  } else if (keys.d.pressed && lastKey === `d`) {
+    movables.forEach((movables) => {
+      movables.position.x -= 3;
+    });
+  }
 }
+
+//###-------------------------------------------------------------------------------##
 
 // nos ifs adicionaremos a movimentação conforme a tecla for pressionada
 
