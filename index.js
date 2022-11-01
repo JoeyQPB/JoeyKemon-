@@ -24,7 +24,7 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 // RELACIONADO A TAG CANVAS
 
 const image = new Image();
-image.src = "./img/JoeyKemon_Map.png";
+image.src = "./img/JoeyKemon_Map2.png";
 
 const playerImage = new Image();
 playerImage.src = "./img/playerDown.png";
@@ -101,6 +101,7 @@ let playerImageX = -550;
 
 // 4 ultimos argumentos:
 // a ref de x e y vai ser em relação a img ja posicionada
+// ou seja  colocar a img do boneco no lugar q queremos dentro da img no canvas
 // para posiciona-lo no centro utilizamos a largura e a altura do canvas como base
 // largura e altura
 // são relacionados ao posicionamento da renderização da img na tela
@@ -153,8 +154,8 @@ function animate() {
     0,
     playerImage.width / 4,
     playerImage.height,
-    canvas.width / 2 - playerImage.width / 4 / 1.5,
-    canvas.height / 2 - playerImage.height / 2,
+    canvas.width / 2 - playerImage.width / 1.75,
+    canvas.height / 2 - playerImage.height,
     playerImage.width / 4,
     playerImage.height
   );
