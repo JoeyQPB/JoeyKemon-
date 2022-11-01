@@ -6,6 +6,10 @@ canvas.height = 576;
 
 const c = canvas.getContext("2d");
 
+console.log(collisions);
+// para incluir ele aq, nos importamos o arquivo para o nosso index
+// ent quando rodarmos o codigo ele consegue fzr essa referencia
+
 //  levando à criação de um CanvasRenderingContext2D - objeto representando
 //    um contexto de renderização bidimensional.
 
