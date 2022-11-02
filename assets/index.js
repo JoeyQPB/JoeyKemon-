@@ -16,25 +16,7 @@ for (let i = 0; i < collisions.length; i += 70) {
   collisionsMap.push(collisions.slice(i, 70 + i));
 }
 
-// vamos criar obj para nossas fontreiras
-// com o static vc cria variaveis estaticas para serem usadas na classe e fora dela
-
-class Boundary {
-  static width = 44.4;
-  static height = 44.4;
-  constructor({ position, width, height }) {
-    this.position = position;
-    this.width = 44.4;
-    this.height = 44.4;
-  }
-
-  draw() {
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
-    c.fillStyle = "rgba(255, 0, 0, 0";
-  }
-}
-
-// cont criada para definir a posição do background
+// const criada para definir a posição do background
 
 const offset = {
   x: -550,
@@ -81,40 +63,20 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 const image = new Image();
 image.src = "./img/JoeyKemon_Map2.png";
 
-const playerImage = new Image();
-playerImage.src = "./img/playerDown.png";
+const foregroundImage = new Image();
+foregroundImage.src = "./img/foregroundobjects.png";
 
-class Sprite {
-  constructor({ position, velocity, image, frames = { max: 1 } }) {
-    this.position = position;
-    this.image = image;
-    this.frames = frames;
+const playerDownImage = new Image();
+playerDownImage.src = "./img/playerDown.png";
 
-    this.image.onload = () => {
-      this.width = this.image.width / this.frames.max;
-      this.height = this.image.height;
-    };
-  }
+const playerUPImage = new Image();
+playerUPImage.src = "./img/playerUp.png";
 
-  draw() {
-    c.drawImage(
-      this.image,
-      0,
-      0,
-      this.image.width / this.frames.max,
-      this.image.height,
-      this.position.x,
-      this.position.y,
-      this.image.width / this.frames.max,
-      this.image.height
-    );
-  }
-}
+const playerLeftImage = new Image();
+playerLeftImage.src = "./img/playerLeft.png";
 
-// personalizamos o metodo draw para aceitar qq img, e criamos um paramatreo no
-// constructor para receber os frames da img, por padrao ele sera 1
-// pq algumas img serao estaticas
-// onload p/ quando nossa img estiver disponivel
+const playerRightImage = new Image();
+playerRightImage.src = "./img/playerRight.png";
 
 // novo obj da img do player
 // usamos a largura e altura definidas no nosso png
@@ -124,9 +86,15 @@ const player = new Sprite({
     x: canvas.width / 2 - 192 / 1.75,
     y: canvas.height / 2 - 68,
   },
-  image: playerImage,
+  image: playerDownImage,
   frames: {
     max: 4,
+  },
+  sprites: {
+    up: playerUPImage,
+    left: playerLeftImage,
+    right: playerRightImage,
+    down: playerDownImage,
   },
 });
 
@@ -138,6 +106,16 @@ const background = new Sprite({
     y: offset.y,
   },
   image: image,
+});
+
+// novo obj da img de foreground
+
+const foreground = new Sprite({
+  position: {
+    x: offset.x,
+    y: offset.y,
+  },
+  image: foregroundImage,
 });
 
 let backgroundImageX = -550;
@@ -249,7 +227,7 @@ const testBoundary = new Boundary({
 // cada img q se movera sera um el do array, se vamos usar para todos e n queremos um
 // array resultante, usaremos o forEach para passar por cada um deles
 
-const movables = [background, ...boundaries];
+const movables = [background, ...boundaries, foreground];
 
 function rectangularCollision({ rectangular1, rectangular2 }) {
   return (
@@ -272,10 +250,15 @@ function animate() {
     boundary.draw();
   });
   player.draw();
+  foreground.draw();
 
   let moving = true;
+  player.moving = false;
 
   if (keys.w.pressed && lastKey === `w`) {
+    player.moving = true;
+    player.image = player.sprites.up;
+
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
 
@@ -301,6 +284,9 @@ function animate() {
         movables.position.y += 3;
       });
   } else if (keys.a.pressed && lastKey === `a`) {
+    player.moving = true;
+    player.image = player.sprites.left;
+
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
 
@@ -326,6 +312,9 @@ function animate() {
         movables.position.x += 3;
       });
   } else if (keys.s.pressed && lastKey === `s`) {
+    player.moving = true;
+    player.image = player.sprites.down;
+
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
 
@@ -351,6 +340,9 @@ function animate() {
         movables.position.y -= 3;
       });
   } else if (keys.d.pressed && lastKey === `d`) {
+    player.moving = true;
+    player.image = player.sprites.right;
+
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
 
