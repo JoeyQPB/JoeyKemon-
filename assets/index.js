@@ -3,6 +3,10 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
+// aq estaremos chamando nassa biblioteca de animação e passando para ela o q
+// queremos animar como primeiro argumento
+// e a segunda propriedade sera um obj com tdas as propriedades da animação
+
 canvas.width = 1024;
 canvas.height = 576;
 
@@ -262,13 +266,17 @@ function rectangularCollision({ rectangular1, rectangular2 }) {
   );
 }
 
+const battle = {
+  initiated: false,
+};
+
 //##-------------------------------------------------------------------------------##
 
 // essa função determina basicamente tudo oq acontece na tela
 // temos a img de backgroung, as colisoes o player e seu movimentos
 
 function animate() {
-  window.requestAnimationFrame(animate);
+  const animationId = window.requestAnimationFrame(animate);
   background.draw();
   boundaries.forEach((boundary) => {
     boundary.draw();
@@ -279,6 +287,12 @@ function animate() {
   player.draw();
   foreground.draw();
 
+  let moving = true;
+  player.moving = false;
+
+  if (battle.initiated) return;
+
+  // activate a battle
   if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
     for (let i = 0; i < battleZones.length; i++) {
       const battleZone = battleZones[i];
@@ -302,14 +316,31 @@ function animate() {
         overlappingArea > (player.width * player.height) / 3 &&
         Math.random() < 0.037
       ) {
-        console.log("battleZone collision");
+        console.log("Activate battle");
+
+        // deactivate current animation loop
+        window.cancelAnimationFrame(animationId);
+
+        battle.initiated = true;
+        gsap.to("#overlappingDiv", {
+          opacity: 1,
+          repeat: 2,
+          yoyo: true,
+          duration: 0.4,
+          onComplete() {
+            gsap.to(`#overlappingDiv`, {
+              opacity: 1,
+              duration: 0.4,
+            });
+
+            // activate a new animation loop
+            animateBattle();
+          },
+        });
         break;
       }
     }
   }
-
-  let moving = true;
-  player.moving = false;
 
   if (keys.w.pressed && lastKey === `w`) {
     player.moving = true;
@@ -431,6 +462,11 @@ function animate() {
 // nos ifs adicionaremos a movimentação conforme a tecla for pressionada
 
 animate();
+
+function animateBattle() {
+  window.requestAnimationFrame(animateBattle);
+}
+
 let lastKey = ``;
 
 window.addEventListener("keydown", (e) => {

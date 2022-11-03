@@ -48,7 +48,7 @@ class Boundary {
   static height = 44.4;
   constructor({ position, width, height }) {
     this.position = position;
-    this.width = 36;
+    this.width = 35;
     this.height = 25;
   }
 
