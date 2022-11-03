@@ -314,7 +314,7 @@ function animate() {
           rectangular2: battleZone,
         }) &&
         overlappingArea > (player.width * player.height) / 3 &&
-        Math.random() < 0.037
+        Math.random() < 0.03
       ) {
         console.log("Activate battle");
 
@@ -326,21 +326,20 @@ function animate() {
           opacity: 1,
           repeat: 3,
           yoyo: true,
-          duration: 0.5,
+          duration: 0.4,
           onComplete() {
-            // gsap.to(`#overlappingDiv`, {
-            //   opacity: 1,
-            //   duration: 0.4,
-            // onComplete() {
-            // activate a new animation loop
-            // animateBattle();
-            // gsap.to(`#overlappingDiv`, {
-            //   opacity: 1,
-            //   duration: 0.4,
-            // });
-            // },
-            // });
-            animateBattle();
+            gsap.to(`#overlappingDiv`, {
+              opacity: 1,
+              duration: 0.4,
+              onComplete() {
+                // activate a new animation loop
+                animateBattle();
+                gsap.to(`#overlappingDiv`, {
+                  opacity: 0,
+                  duration: 0.4,
+                });
+              },
+            });
           },
         });
         break;
@@ -467,7 +466,7 @@ function animate() {
 
 // nos ifs adicionaremos a movimentação conforme a tecla for pressionada
 
-animate();
+// animate();
 
 const battleBackgroungImage = new Image();
 battleBackgroungImage.src = `./img/battleBackground.png`;
@@ -479,12 +478,23 @@ const battleBackground = new Sprite({
   image: battleBackgroungImage,
 });
 
+const draggleImage = new Image();
+draggleImage.src = `./img/draggleSprite.png`;
+const draggle = new Sprite({
+  position: {
+    x: 200,
+    y: 200,
+  },
+  image: draggleImage,
+});
+
 function animateBattle() {
   window.requestAnimationFrame(animateBattle);
   battleBackground.draw();
+  draggle.draw();
 }
 
-// animateBattle();
+animateBattle();
 
 let lastKey = ``;
 
