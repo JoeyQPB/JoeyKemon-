@@ -324,16 +324,22 @@ function animate() {
         battle.initiated = true;
         gsap.to("#overlappingDiv", {
           opacity: 1,
-          repeat: 2,
+          repeat: 3,
           yoyo: true,
-          duration: 0.4,
+          duration: 0.5,
           onComplete() {
-            gsap.to(`#overlappingDiv`, {
-              opacity: 1,
-              duration: 0.4,
-            });
-
+            // gsap.to(`#overlappingDiv`, {
+            //   opacity: 1,
+            //   duration: 0.4,
+            // onComplete() {
             // activate a new animation loop
+            // animateBattle();
+            // gsap.to(`#overlappingDiv`, {
+            //   opacity: 1,
+            //   duration: 0.4,
+            // });
+            // },
+            // });
             animateBattle();
           },
         });
@@ -463,9 +469,22 @@ function animate() {
 
 animate();
 
+const battleBackgroungImage = new Image();
+battleBackgroungImage.src = `./img/battleBackground.png`;
+const battleBackground = new Sprite({
+  position: {
+    x: 0,
+    y: 0,
+  },
+  image: battleBackgroungImage,
+});
+
 function animateBattle() {
   window.requestAnimationFrame(animateBattle);
+  battleBackground.draw();
 }
+
+// animateBattle();
 
 let lastKey = ``;
 
