@@ -48,13 +48,31 @@ class Boundary {
   static height = 44.4;
   constructor({ position, width, height }) {
     this.position = position;
-    this.width = 39;
-    this.height = 28;
+    this.width = 36;
+    this.height = 25;
   }
 
   draw() {
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
-    c.fillStyle = "rgba(255, 0, 0, 0";
+    c.fillStyle = "rgba(255, 0, 0, 0)";
+  }
+}
+
+// vamos criar obj para nossas fontreiras
+// com o static vc cria variaveis estaticas para serem usadas na classe e fora dela
+
+class zonaB {
+  static width = 44.4;
+  static height = 44.4;
+  constructor({ position, width, height }) {
+    this.position = position;
+    this.width = 44.4;
+    this.height = 44.4;
+  }
+
+  draw() {
+    c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    c.fillStyle = "rgba(255, 0, 0, 0.4)";
   }
 }
 

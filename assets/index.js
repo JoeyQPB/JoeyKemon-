@@ -11,11 +11,18 @@ canvas.height = 576;
 // vamos usar o slice para pegar o sub array
 
 const collisionsMap = [];
-
 for (let i = 0; i < collisions.length; i += 70) {
   collisionsMap.push(collisions.slice(i, 70 + i));
 }
 
+// contruindo um loop para pegar sub array do nosso array battleZones
+// vamos pegar de 70 e 70 -> pq nosso mapa tem 70 BLOCOS DE LARGURA por 40 de altura
+// vamos usar o slice para pegar o sub array
+
+const battleZonesMap = [];
+for (let i = 0; i < battleZonesData.length; i += 70) {
+  battleZonesMap.push(battleZonesData.slice(i, 70 + i));
+}
 // const criada para definir a posição do background
 
 const offset = {
@@ -33,6 +40,23 @@ collisionsMap.forEach((row, i) => {
           position: {
             x: j * Boundary.width + offset.x,
             y: i * Boundary.height + offset.y,
+          },
+        })
+      );
+    }
+  });
+});
+
+const battleZones = [];
+
+battleZonesMap.forEach((row, i) => {
+  row.forEach((symbol, j) => {
+    if (symbol === 2049) {
+      battleZones.push(
+        new zonaB({
+          position: {
+            x: j * zonaB.width + offset.x,
+            y: i * zonaB.height + offset.y,
           },
         })
       );
@@ -227,7 +251,7 @@ const testBoundary = new Boundary({
 // cada img q se movera sera um el do array, se vamos usar para todos e n queremos um
 // array resultante, usaremos o forEach para passar por cada um deles
 
-const movables = [background, ...boundaries, foreground];
+const movables = [background, ...boundaries, foreground, ...battleZones];
 
 function rectangularCollision({ rectangular1, rectangular2 }) {
   return (
@@ -249,8 +273,40 @@ function animate() {
   boundaries.forEach((boundary) => {
     boundary.draw();
   });
+  battleZones.forEach((battleZones) => {
+    battleZones.draw();
+  });
   player.draw();
   foreground.draw();
+
+  if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+    for (let i = 0; i < battleZones.length; i++) {
+      const battleZone = battleZones[i];
+      const overlappingArea =
+        (Math.min(
+          player.position.x + player.width,
+          battleZone.position.x + battleZone.width
+        ) -
+          Math.max(player.position.x, battleZone.position.x)) *
+        (Math.min(
+          player.position.y + player.height,
+          battleZone.position.y + battleZone.height
+        ) -
+          Math.max(player.position.y, battleZone.position.y));
+
+      if (
+        rectangularCollision({
+          rectangular1: player,
+          rectangular2: battleZone,
+        }) &&
+        overlappingArea > (player.width * player.height) / 3 &&
+        Math.random() < 0.037
+      ) {
+        console.log("battleZone collision");
+        break;
+      }
+    }
+  }
 
   let moving = true;
   player.moving = false;
