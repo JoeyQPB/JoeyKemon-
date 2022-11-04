@@ -64,6 +64,7 @@ function initBattle() {
               });
 
               battle.initiated = false;
+              audio.Map.play();
             },
           });
         });
@@ -98,6 +99,7 @@ function initBattle() {
                 });
 
                 battle.initiated = false;
+                audio.Map.play();
               },
             });
           });
@@ -111,7 +113,6 @@ function initBattle() {
       document.querySelector(".attack-type").style.color = selectedAttack.color;
     });
     button.addEventListener("mouseout", (e) => {
-      const selectedAttack = attacks[e.currentTarget.innerHTML];
       document.querySelector(".attack-type").innerHTML = "Attack Type";
       document.querySelector(".attack-type").style.color = "black";
     });

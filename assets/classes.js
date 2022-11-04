@@ -99,8 +99,8 @@ class Monsters extends Sprite {
       opacity: 0,
       y: this.position.y,
     });
-
-    console.log("faint");
+    audio.battle.stop();
+    audio.victory.play();
   }
 
   attack({ attack, recipient, renderedSprites }) {
@@ -118,6 +118,7 @@ class Monsters extends Sprite {
 
     switch (attack.name) {
       case "Fireball":
+        audio.initFireball.play();
         const FireballImage = new Image();
         FireballImage.src = "./img/fireball.png";
         const Fireball = new Sprite({
@@ -141,6 +142,7 @@ class Monsters extends Sprite {
           y: recipient.position.y,
           onComplete: () => {
             // Enemy actually gets hit
+            audio.fireballHit.play();
             gsap.to(healthBar, {
               width: recipient.health + `%`,
             });
@@ -178,6 +180,7 @@ class Monsters extends Sprite {
             duration: 0.2,
             onComplete: () => {
               // Enemy actually gets hit
+              audio.tackleHit.play();
               gsap.to(healthBar, {
                 width: recipient.health + `%`,
               });
@@ -215,10 +218,11 @@ class Monsters extends Sprite {
     let rotation = 1;
     if (this.isEnemy) rotation = -2.2;
 
-    recipient.health = this.health - attack.damage / 2;
+    recipient.health = this.health - attack.damage;
 
     switch (attack.name) {
       case "Fireball":
+        audio.initFireball.play();
         const FireballImage = new Image();
         FireballImage.src = "./img/fireball.png";
         const Fireball = new Sprite({
@@ -242,6 +246,7 @@ class Monsters extends Sprite {
           y: recipient.position.y,
           onComplete: () => {
             // draggle actually gets hit
+            audio.fireballHit.play();
             gsap.to(healthBar, {
               width: recipient.health + `%`,
             });
@@ -279,6 +284,7 @@ class Monsters extends Sprite {
             duration: 0.2,
             onComplete: () => {
               // draggle actually gets hit
+              audio.tackleHit.play();
               gsap.to(healthBar, {
                 width: recipient.health + `%`,
               });
@@ -335,7 +341,7 @@ class zonaB {
 
   draw() {
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
-    c.fillStyle = "rgba(255, 0, 0, 0.2)";
+    c.fillStyle = "rgba(255, 0, 0, 0)";
   }
 }
 
