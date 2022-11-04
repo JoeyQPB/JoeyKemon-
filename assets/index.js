@@ -492,6 +492,7 @@ const draggle = new Sprite({
     hold: 23,
   },
   animate: true,
+  isEnemy: true,
 });
 
 const embyImage = new Image();
@@ -509,6 +510,8 @@ const emby = new Sprite({
   animate: true,
 });
 
+// aqui criamos oq ira aparecer quando a batalha iniciar
+
 function animateBattle() {
   window.requestAnimationFrame(animateBattle);
   battleBackground.draw();
@@ -518,6 +521,22 @@ function animateBattle() {
 
 // animate();
 animateBattle();
+
+document.querySelectorAll("button").forEach((button) => {
+  button.addEventListener("click", () => {
+    emby.attack({
+      attack: {
+        name: `Tackle`,
+        damage: 10,
+        type: `normal`,
+      },
+      recipient: draggle,
+    });
+  });
+});
+addEventListener("click", () => {});
+
+// ------------------------------------------------------------
 
 let lastKey = ``;
 

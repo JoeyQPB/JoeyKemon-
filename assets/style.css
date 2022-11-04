@@ -10,7 +10,6 @@ body {
 
 button {
   border: 0;
-  border-right: 1px solid black;
   cursor: pointer;
   font-size: 16px;
 }
@@ -84,13 +83,13 @@ button:hover {
   position: relative;
 }
 
-.healt-draggle-bar {
+.health-draggle-bar {
   height: 5px;
   background-color: #ccc;
   margin-top: 10px;
 }
 
-.healt-draggle-bar-life {
+.health-draggle-bar-life {
   height: 5px;
   background-color: green;
   position: absolute;
@@ -119,13 +118,13 @@ button:hover {
   position: relative;
 }
 
-.healt-emby-bar {
+.health-emby-bar {
   height: 5px;
   background-color: #ccc;
   margin-top: 10px;
 }
 
-.healt-emby-bar-life {
+.health-emby-bar-life {
   height: 5px;
   background-color: green;
   position: absolute;
