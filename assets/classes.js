@@ -7,6 +7,7 @@ class Sprite {
     animate = false,
     isEnemy = false,
     rotation = 0,
+    name,
   }) {
     this.position = position;
     this.image = image;
@@ -22,6 +23,7 @@ class Sprite {
     this.health = 100;
     this.isEnemy = isEnemy;
     this.rotation = rotation;
+    this.name = name;
   }
 
   draw() {
@@ -62,6 +64,10 @@ class Sprite {
   }
 
   attack({ attack, recipient, renderedSprites }) {
+    document.querySelector(".dialogue").style.display = "block";
+    document.querySelector(".dialogue").innerHTML =
+      this.name + " used " + attack.name;
+
     let healthBar = ".health-draggle-bar-life";
     if (this.isEnemy) healthBar = ".health-emby-bar-life";
 
