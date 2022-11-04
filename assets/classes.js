@@ -8,13 +8,16 @@ class Sprite {
     rotation = 0,
   }) {
     this.position = position;
-    this.image = image;
+    this.image = new Image();
     this.frames = { ...frames, val: 0, elapsed: 0 };
 
     this.image.onload = () => {
       this.width = this.image.width / this.frames.max;
       this.height = this.image.height;
     };
+
+    this.image.src = image.src;
+
     this.animate = animate;
     this.sprites = sprites;
     this.opacity = 1;
@@ -89,12 +92,14 @@ class Monsters extends Sprite {
 
   faint() {
     document.querySelector(".dialogue").innerHTML = this.name + " fainted!";
-    gsap.to(this.position, {
-      y: this.position.y + 20,
-    });
+    // gsap.to(this.position, {
+    //   y: this.position.y + 20,
+    // });
     gsap.to(this, {
       opacity: 0,
+      y: this.position.y,
     });
+
     console.log("faint");
   }
 
@@ -198,6 +203,107 @@ class Monsters extends Sprite {
         break;
     }
   }
+
+  attack2({ attack, recipient, renderedSprites }) {
+    document.querySelector(".dialogue").style.display = "block";
+    document.querySelector(".dialogue").innerHTML =
+      this.name + " used " + attack.name;
+
+    let healthBar = ".health-draggle-bar-life";
+    if (this.isEnemy) healthBar = ".health-emby-bar-life";
+
+    let rotation = 1;
+    if (this.isEnemy) rotation = -2.2;
+
+    recipient.health = this.health - attack.damage / 2;
+
+    switch (attack.name) {
+      case "Fireball":
+        const FireballImage = new Image();
+        FireballImage.src = "./img/fireball.png";
+        const Fireball = new Sprite({
+          position: {
+            x: this.position.x,
+            y: this.position.y,
+          },
+          image: FireballImage,
+          frames: {
+            max: 4,
+            hold: 10,
+          },
+          animate: true,
+          rotation: rotation,
+        });
+
+        renderedSprites.splice(1, 0, Fireball);
+
+        gsap.to(Fireball.position, {
+          x: recipient.position.x,
+          y: recipient.position.y,
+          onComplete: () => {
+            // draggle actually gets hit
+            gsap.to(healthBar, {
+              width: recipient.health + `%`,
+            });
+
+            gsap.to(recipient.position, {
+              x: recipient.position.x + 15,
+              yoyo: true,
+              repeat: 5,
+              duration: 0.08,
+            });
+
+            gsap.to(recipient, {
+              opacity: 0,
+              repeat: 5,
+              yoyo: true,
+              duration: 0.08,
+            });
+            renderedSprites.splice(1, 1);
+          },
+        });
+
+        break;
+
+      case "Tackle":
+        const tl = gsap.timeline();
+
+        let movementDistance = 20;
+        if (this.isEnemy) movementDistance = -20;
+
+        tl.to(this.position, {
+          x: this.position.x - movementDistance,
+        })
+          .to(this.position, {
+            x: this.position.x + movementDistance * 2,
+            duration: 0.2,
+            onComplete: () => {
+              // draggle actually gets hit
+              gsap.to(healthBar, {
+                width: recipient.health + `%`,
+              });
+
+              gsap.to(recipient.position, {
+                x: recipient.position.x + 15,
+                yoyo: true,
+                repeat: 5,
+                duration: 0.08,
+              });
+
+              gsap.to(recipient, {
+                opacity: 0,
+                repeat: 5,
+                yoyo: true,
+                duration: 0.08,
+              });
+            },
+          })
+          .to(this.position, {
+            x: this.position.x,
+          });
+        break;
+    }
+  }
 }
 
 class Boundary {
@@ -229,7 +335,7 @@ class zonaB {
 
   draw() {
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
-    c.fillStyle = "rgba(255, 0, 0, 0.4)";
+    c.fillStyle = "rgba(255, 0, 0, 0.2)";
   }
 }
 

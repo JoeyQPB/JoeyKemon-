@@ -278,6 +278,10 @@ const battle = {
 
 function animate() {
   const animationId = window.requestAnimationFrame(animate);
+  document.querySelector(".battle-bar").style.display = `none`;
+  document.querySelector(".draggle-bar").style.display = `none`;
+  document.querySelector(".emby-bar").style.display = `none`;
+
   background.draw();
   boundaries.forEach((boundary) => {
     boundary.draw();
@@ -315,7 +319,7 @@ function animate() {
           rectangular2: battleZone,
         }) &&
         overlappingArea > (player.width * player.height) / 3 &&
-        Math.random() < 0.03
+        Math.random() < 0.00915
       ) {
         console.log("Activate battle");
 
@@ -334,6 +338,7 @@ function animate() {
               duration: 0.4,
               onComplete() {
                 // activate a new animation loop
+                initBattle();
                 animateBattle();
                 gsap.to(`#overlappingDiv`, {
                   opacity: 0,
