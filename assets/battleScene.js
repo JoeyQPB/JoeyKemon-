@@ -56,6 +56,17 @@ document.querySelectorAll("button").forEach((button) => {
       });
     });
   });
+
+  button.addEventListener("mouseenter", (e) => {
+    const selectedAttack = attacks[e.currentTarget.innerHTML];
+    document.querySelector(".attack-type").innerHTML = selectedAttack.type;
+    document.querySelector(".attack-type").style.color = selectedAttack.color;
+  });
+  button.addEventListener("mouseout", (e) => {
+    const selectedAttack = attacks[e.currentTarget.innerHTML];
+    document.querySelector(".attack-type").innerHTML = "Attack Type";
+    document.querySelector(".attack-type").style.color = "black";
+  });
 });
 
 document.querySelector(".dialogue").addEventListener("click", (e) => {
