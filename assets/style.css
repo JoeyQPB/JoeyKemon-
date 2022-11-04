@@ -63,3 +63,75 @@ button:hover {
 .attack-type h1 {
   font-size: 16px;
 }
+
+/* ------- */
+
+.draggle-bar {
+  background-color: white;
+  width: 250px;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  border: 4px black solid;
+  padding: 12px;
+}
+
+.draggle-bar h1 {
+  font-size: 16px;
+}
+
+.life-counter-draggle {
+  position: relative;
+}
+
+.healt-draggle-bar {
+  height: 5px;
+  background-color: #ccc;
+  margin-top: 10px;
+}
+
+.healt-draggle-bar-life {
+  height: 5px;
+  background-color: green;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+/* ------- */
+
+.emby-bar {
+  background-color: white;
+  width: 250px;
+  position: absolute;
+  top: 340px;
+  right: 50px;
+  border: 4px black solid;
+  padding: 12px;
+}
+
+.emby-bar h1 {
+  font-size: 16px;
+}
+
+.life-counter-emby {
+  position: relative;
+}
+
+.healt-emby-bar {
+  height: 5px;
+  background-color: #ccc;
+  margin-top: 10px;
+}
+
+.healt-emby-bar-life {
+  height: 5px;
+  background-color: green;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+/* ------- */
