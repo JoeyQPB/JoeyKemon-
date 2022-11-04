@@ -5,9 +5,7 @@ class Sprite {
     frames = { max: 1, hold: 10 },
     sprites,
     animate = false,
-    isEnemy = false,
     rotation = 0,
-    name,
   }) {
     this.position = position;
     this.image = image;
@@ -20,10 +18,7 @@ class Sprite {
     this.animate = animate;
     this.sprites = sprites;
     this.opacity = 1;
-    this.health = 100;
-    this.isEnemy = isEnemy;
     this.rotation = rotation;
-    this.name = name;
   }
 
   draw() {
@@ -61,6 +56,35 @@ class Sprite {
       if (this.frames.val < this.frames.max - 1) this.frames.val++;
       else this.frames.val = 0;
     }
+  }
+}
+
+// personalizamos o metodo draw para aceitar qq img, e criamos um paramatreo no
+// constructor para receber os frames da img, por padrao ele sera 1
+// pq algumas img serao estaticas
+// onload p/ quando nossa img estiver disponivel
+
+// no metodo attack teremos qual attack sera feito, o seu dano e quem ira receber
+// a animação fara nosso personagem se mover
+// o timeline é um recurso usado para saber a ordem das animações
+
+class Monsters extends Sprite {
+  constructor({
+    position,
+    image,
+    frames = { max: 1, hold: 10 },
+    sprites,
+    animate = false,
+    rotation = 0,
+    isEnemy = false,
+    name,
+    attacks,
+  }) {
+    super({ position, image, frames, sprites, animate, rotation });
+    this.name = name;
+    this.isEnemy = isEnemy;
+    this.health = 100;
+    this.attacks = attacks;
   }
 
   attack({ attack, recipient, renderedSprites }) {
@@ -164,15 +188,6 @@ class Sprite {
     }
   }
 }
-
-// personalizamos o metodo draw para aceitar qq img, e criamos um paramatreo no
-// constructor para receber os frames da img, por padrao ele sera 1
-// pq algumas img serao estaticas
-// onload p/ quando nossa img estiver disponivel
-
-// no metodo attack teremos qual attack sera feito, o seu dano e quem ira receber
-// a animação fara nosso personagem se mover
-// o timeline é um recurso usado para saber a ordem das animações
 
 class Boundary {
   static width = 44.4;

@@ -8,15 +8,9 @@ body {
   background-color: black;
 }
 
-button {
-  border: 0;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button:hover {
+/* button:hover {
   background-color: #ddd;
-}
+} */
 
 #div {
   display: inline-block;
@@ -43,12 +37,16 @@ button:hover {
   left: 0;
   border-top: 4px black solid;
   display: flex;
+  font-size: 16px;
 }
 
 .attack-options {
   width: 70%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .attack-type {

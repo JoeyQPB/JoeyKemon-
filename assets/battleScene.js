@@ -8,42 +8,18 @@ const battleBackground = new Sprite({
   image: battleBackgroungImage,
 });
 
-const draggleImage = new Image();
-draggleImage.src = `./img/draggleSprite.png`;
-const draggle = new Sprite({
-  position: {
-    x: 800,
-    y: 100,
-  },
-  image: draggleImage,
-  frames: {
-    max: 4,
-    hold: 23,
-  },
-  animate: true,
-  isEnemy: true,
-  name: "Draggle",
-});
-
-const embyImage = new Image();
-embyImage.src = `./img/embySprite.png`;
-const emby = new Sprite({
-  position: {
-    x: 285,
-    y: 340,
-  },
-  image: embyImage,
-  frames: {
-    max: 4,
-    hold: 10,
-  },
-  animate: true,
-  name: "Emby",
-});
+const draggle = new Monsters(monsters.Draggle);
+const emby = new Monsters(monsters.Emby);
 
 // aqui criamos oq ira aparecer quando a batalha iniciar
 
 const renderedSprites = [draggle, emby];
+
+emby.attacks.forEach((attack) => {
+  const button = document.createElement("button");
+  button.innerHTML = attack.name;
+  document.querySelector(".attack-options").append(button);
+});
 
 function animateBattle() {
   window.requestAnimationFrame(animateBattle);
