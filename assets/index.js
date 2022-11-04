@@ -512,25 +512,28 @@ const emby = new Sprite({
 
 // aqui criamos oq ira aparecer quando a batalha iniciar
 
+const renderedSprites = [draggle, emby];
+
 function animateBattle() {
   window.requestAnimationFrame(animateBattle);
   battleBackground.draw();
-  draggle.draw();
-  emby.draw();
+
+  renderedSprites.forEach((sprite) => {
+    sprite.draw();
+  });
 }
 
 // animate();
 animateBattle();
 
+// eventos para os botões (ataques)
 document.querySelectorAll("button").forEach((button) => {
-  button.addEventListener("click", () => {
+  button.addEventListener("click", (e) => {
+    const selectedAttack = attacks[e.currentTarget.innerHTML];
     emby.attack({
-      attack: {
-        name: `Tackle`,
-        damage: 10,
-        type: `normal`,
-      },
+      attack: selectedAttack,
       recipient: draggle,
+      renderedSprites,
     });
   });
 });
