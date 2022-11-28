@@ -4,13 +4,16 @@ The game is basically a simplified retelling of pokemon red and blue, where the 
 
 **GAME** 
 
-MAP 
+
+<div align="center">
+  <p>MAP</p>
+</div>
 
 ![jk1](https://user-images.githubusercontent.com/114830843/204319506-b8230d19-d939-4719-87be-8a5f5331d3f7.png)
 
 BATTLE
 
-![Screenshot](file:///Users/joey/Desktop/jk2.png)
+![jk2](https://user-images.githubusercontent.com/114830843/204319854-09240458-de91-402c-a805-5e5f16c21037.png)
 
 **SLIDE-PRESENTATION:** https://1drv.ms/p/s!AvGji4RYyqovgRWx26TMZFKNXBtD?e=FuUxNt
 
