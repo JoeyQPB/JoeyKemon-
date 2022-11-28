@@ -9,9 +9,14 @@ The game is basically a simplified retelling of pokemon red and blue, where the 
   <p>MAP</p>
 </div>
 
+<div align="center">
+  <img src= "![jk1](https://user-images.githubusercontent.com/114830843/204319506-b8230d19-d939-4719-87be-8a5f5331d3f7.png)" whidt:700px/>
+</div>
 ![jk1](https://user-images.githubusercontent.com/114830843/204319506-b8230d19-d939-4719-87be-8a5f5331d3f7.png)
 
-BATTLE
+<div align="center">
+  <p>BATTLE</p>
+</div>
 
 ![jk2](https://user-images.githubusercontent.com/114830843/204319854-09240458-de91-402c-a805-5e5f16c21037.png)
 
