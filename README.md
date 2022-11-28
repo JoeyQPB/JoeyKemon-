@@ -3,7 +3,7 @@
 The game is basically a simplified retelling of pokemon red and blue, where the character explores the game map looking for battles. When encountering a battle the objective is to defeat the enemy pokemeon.
 
 <div align="center">
-  **GAME**
+ <p><strong>GAME</strong></p>
 </div>
 
 <div align="center">
