@@ -6,7 +6,7 @@ The game is basically a simplified retelling of pokemon red and blue, where the 
 
 MAP 
 
-![Screenshot](file:///Users/joey/Desktop/jk1.png)
+![jk1](https://user-images.githubusercontent.com/114830843/204319506-b8230d19-d939-4719-87be-8a5f5331d3f7.png)
 
 BATTLE
 
